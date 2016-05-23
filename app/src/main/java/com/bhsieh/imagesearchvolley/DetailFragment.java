@@ -14,6 +14,13 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 
+/**
+ * Created by Brian on 5/22/2016.
+ */
+// the second fragment of the project. Receive URL and title of the image selected
+// in GridFragment and display it here.
+// push "Back" button to go back to GridFragment
+
 public class DetailFragment extends Fragment {
 
     private OnDetailFragmentListener mListener; // interface listener
@@ -29,30 +36,27 @@ public class DetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "onCreate");
-
         // Retrieve data from Arguments
         if(getArguments()!= null){
             image = getArguments().getString(Constants.KEY_LINK);
             name = getArguments().getString(Constants.KEY_TITLE);
         }
-
     }
 
+    // check if Activity has implemented our interface
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        Log.d(TAG, "onAttach");
-
         if (context instanceof OnDetailFragmentListener) {
-            mListener = (OnDetailFragmentListener) context;
+            mListener = (OnDetailFragmentListener) context; // bind Activity to listener
         } else {
             throw new RuntimeException(context.toString() +
                     " must implement OnDetailFragmentListener");
         }
     }
 
+    // inflate XML layout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,12 +64,13 @@ public class DetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
 
+    // display the image and info
+    // handle click event of "Back" button
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.d(TAG, "onActivityCreate");
-        ImageLoader imageLoader;
+        ImageLoader imageLoader; // Volley
 
         //Display image and title
         imageLoader = CustomVolleyRequest.getInstance(getActivity()).getImageLoader();
@@ -87,6 +92,7 @@ public class DetailFragment extends Fragment {
         });
     }
 
+    // release Activity from listening
     @Override
     public void onDetach() {
         Log.d(TAG, "onDetach");
@@ -94,10 +100,12 @@ public class DetailFragment extends Fragment {
         mListener = null;
     }
 
+    // fragment interface declarations
     public interface OnDetailFragmentListener {
         void onBackToGrid();
     }
 
+    // call the interface method implemented in Main Activity
     void onGoToGridFragment() {
         if(mListener != null) {
             Log.d(TAG, "Calling Activity interface");
