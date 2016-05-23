@@ -92,6 +92,7 @@ public class GridFragment extends Fragment {
         queryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();  // hide keyboard
                 String queryString = getQueryString(); // build query
                 if (queryString == "") {return;}  // empty entry, toast shown already
                 getDataAndDisplay(queryString); // get data from web and display
@@ -129,20 +130,22 @@ public class GridFragment extends Fragment {
             return "";
         }
 
-        // hide keyboard
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getActivity().
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-
         // save query term to Activity, to persist it
         if(mListener != null) {
             mListener.onSaveQueryTermToActivity(queryString);
         }
 
         return queryString;
+    }
+
+    // hide soft keyboard
+    private void hideKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getActivity().
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     // get data from web, show on gridView
@@ -188,6 +191,9 @@ public class GridFragment extends Fragment {
     private void parseResponse(JSONObject jObjResult) {
         try {
             JSONArray jArrItems = jObjResult.getJSONArray(Constants.KEY_ITEMS);
+            if(jArrItems.length()==0) {
+                Toast.makeText(getActivity(), "No Item Found", Toast.LENGTH_SHORT).show();
+            }
             for (int i = 0; i < jArrItems.length(); i++) {
                 JSONObject jObjItem = jArrItems.getJSONObject(i);
                 names.add(jObjItem.getString(Constants.KEY_TITLE));
@@ -197,7 +203,7 @@ public class GridFragment extends Fragment {
     }
 
     // Draw gridView with data
-    void displayGrid() {
+    private void displayGrid() {
         GridViewAdapter gridViewAdapter = new GridViewAdapter(getActivity(), images, names);
         gridView.setAdapter(gridViewAdapter);
     }

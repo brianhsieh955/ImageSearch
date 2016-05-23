@@ -106,7 +106,7 @@ public class DetailFragment extends Fragment {
     }
 
     // call the interface method implemented in Main Activity
-    void onGoToGridFragment() {
+    public void onGoToGridFragment() {
         if(mListener != null) {
             Log.d(TAG, "Calling Activity interface");
             mListener.onBackToGrid();

@@ -1,7 +1,7 @@
 package com.bhsieh.imagesearchvolley;
 
 /**
- * Created by Brian on 5/20/2016.
+ * Created by Brian on 5/22/2016.
  */
 public class Constants {
 
@@ -13,7 +13,4 @@ public class Constants {
     public static final String KEY_TITLE = "title";
     public static final String KEY_LINK  = "link";
 
-    // debug logging
-    //public static final String TAG = "BTH";
-    //public static final String TAG = "test";
 }

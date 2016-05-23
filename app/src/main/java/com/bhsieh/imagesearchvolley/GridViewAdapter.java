@@ -1,7 +1,7 @@
 package com.bhsieh.imagesearchvolley;
 
 /**
- * Created by Brian on 5/20/2016.
+ * Created by Brian on 5/22/2016.
  */
 
 import android.content.Context;

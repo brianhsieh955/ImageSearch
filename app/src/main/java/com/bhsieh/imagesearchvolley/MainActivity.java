@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+/**
+ * Created by Brian on 5/22/2016.
+ */
+
 public class MainActivity extends AppCompatActivity
         implements DetailFragment.OnDetailFragmentListener,
         GridFragment.OnGridFragmentListener {
